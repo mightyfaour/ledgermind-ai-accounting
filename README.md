@@ -1,21 +1,62 @@
-<<<<<<< HEAD
-# React + Vite
+# LedgerMind AI Accounting
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An AI-powered accounting assistant for SMEs and freelancers that automates transaction categorization, predicts cashflow, and provides financial insights.
 
-Currently, two official plugins are available:
+## Technologies Used
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Frontend Framework:** React 19
+- **Build Tool:** Vite
+- **Routing:** React Router DOM
+- **HTTP Client:** Axios
+- **Styling:** Tailwind CSS
 
-## React Compiler
+## Prerequisites
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Before running this project, ensure you have the following installed:
+- [Node.js](https://nodejs.org/) (Version 18 or higher recommended)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-# ledgermind-ai-accounting
-ledgermind-ai-accounting->AI-powered accounting assistant for SMEs and freelancers that automates transaction categorization, predicts cashflow, and provides financial insights.
->>>>>>> ffa4fedfb6ec02acb3917c7f0b607e940e7dffcc
+Follow these steps to set up and run the project locally.
+
+### 1. Install Dependencies
+
+Navigate to the project directory and install the required packages using npm:
+
+```bash
+npm install
+```
+
+### 2. Run the Development Server
+
+Start the Vite development server:
+
+```bash
+npm run dev
+```
+
+The application will typically be accessible at `http://localhost:5173/`. Check your terminal for the exact local URL.
+
+## Available Scripts
+
+In the project directory, you can run:
+
+- `npm run dev`: Starts the development server with Hot Module Replacement (HMR).
+- `npm run build`: Compiles and bundles the application for production into the `dist` directory.
+- `npm run lint`: Runs ESLint to enforce code quality and standard rules.
+- `npm run preview`: Boots up a local static web server to preview the built `dist` folder.
+
+## Project Structure
+
+A brief overview of the key directories and files:
+
+- `src/`: Contains the React components, services, and core application logic.
+- `public/`: Static assets that bypass the build process and are served as-is.
+- `index.html`: The main HTML entry point.
+- `vite.config.js`: Configuration file for Vite.
+- `package.json`: Project metadata, dependencies, and script definitions.
+
+## License
+
+Please refer to the `LICENSE` file in the root directory for licensing information.

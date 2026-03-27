@@ -1,108 +1,120 @@
-
-// import { useState } from "react";
-// import API from "../assets/services/api";
-// import { useNavigate } from "react-router-dom";
-
-// export default function Login() {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const nav = useNavigate();
-
-//   const login = async () => {
-//     try {
-//       const res = await API.post("/auth/login", { email, password });
-//       localStorage.setItem("token", res.data.token);
-//       nav("/dashboard");
-//     } catch {
-//       alert("Login failed");
-//     }
-//   };
-
-//   return (
-//     <div style={{ padding: "100px" }}>
-//       <h2>Login</h2>
-//       <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-//       <input placeholder="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
-//       <button onClick={login}>Login</button>
-//     </div>
-//   );
-// }
 import { useState } from "react";
 import API from "../assets/services/api";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
   const nav = useNavigate();
 
-  const login = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
+    // Simple validation
+    if (!email || !password) {
+      setError("Please fill in all fields.");
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const res = await API.post("POST /api/v1/users/login/", { email, password });
-      localStorage.setItem("token", res.data.token);
-      nav("/dashboard");
+      const res = await API.post("/api/v1/users/login/", { email, password });
+      
+      // Axios success: response returns tokens
+      if (res.data && res.data.access) {
+        localStorage.setItem("access", res.data.access);
+        nav("/dashboard");
+      } else {
+        throw new Error("Invalid response structure from server.");
+      }
     } catch (err) {
-      console.error(err);
-      alert("Login failed");
+      console.error("Login detail:", err);
+      const detail = err.response?.data?.details?.detail || err.response?.data?.message || err.message || "Invalid credentials. Please try again.";
+      setError(detail);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="container">
-      
-      {/* LEFT SIDE */}
+      {/* LEFT SIDE: Brand & Value Prop */}
       <div className="left">
         <h1>LedgerMind</h1>
-        <p>Financial Intelligence Platform</p>
+        <p className="subtitle">Your AI-Powered Financial Co-pilot</p>
 
         <div className="feature">
           <h3>📈 Cashflow Prediction</h3>
-          <p>AI-powered forecasts for smarter decisions</p>
+          <p>Harness advanced AI to forecast your business liquidity and stay ahead of the curve.</p>
         </div>
 
         <div className="feature">
           <h3>📊 Smart Categorization</h3>
-          <p>Automatic expense classification</p>
+          <p>Automate your bookkeeping with intelligent transaction labels and spend analysis.</p>
         </div>
 
         <div className="feature">
           <h3>🛡 Credit Readiness</h3>
-          <p>Know your business loan-readiness score</p>
+          <p>Analyze your financials to understand and improve your loan-readiness score.</p>
         </div>
       </div>
 
-      {/* RIGHT SIDE */}
+      {/* RIGHT SIDE: Authentication Form */}
       <div className="right">
         <div className="card">
           <h2>Welcome back</h2>
-          <p>Sign in to your account</p>
+          <p className="signin-text">Log in to manage your finances</p>
 
-          <input
-            type="email"
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          {error && <div className="error-message">{error}</div>}
 
-          <input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <form onSubmit={handleLogin}>
+            <div className="input-group">
+              <label>Email Address</label>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={isLoading}
+              />
+            </div>
 
-          <button onClick={login}>Sign In</button>
+            <div className="input-group">
+              <label>Password</label>
+              <input
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                disabled={isLoading}
+              />
+            </div>
 
-          {/* <p className="signup">
-            Don't have an account? <span>Sign up</span>
-          </p> */}
-          <p className="signup">
-              Don't have an account?{" "}
-              <span onClick={() => nav("/signup")}>Sign up</span>
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <div className="spinner"></div>
+                  <span>Signing In...</span>
+                </>
+              ) : (
+                "Sign In"
+              )}
+            </button>
+          </form>
+
+          <p className="signup-prompt">
+            Don't have an account? 
+            <span onClick={() => nav("/signup")}>Sign up</span>
           </p>
         </div>
       </div>
-
     </div>
   );
 }

@@ -1,0 +1,29 @@
+ledger-mind-app/
+│
+├── public/
+├── src/
+│
+│   ├── assets/              # images, logos
+│   ├── components/          # reusable UI
+│   │   ├── ui/              # buttons, cards, inputs
+│   │   ├── layout/          # sidebar, navbar
+│   │
+│   ├── pages/               # app screens
+│   │   ├── auth/
+│   │   ├── dashboard/
+│   │   ├── transactions/
+│   │   ├── businesses/
+│   │   ├── predictions/
+│   │   ├── credit/
+│   │   ├── settings/
+│   │
+│   ├── hooks/               # custom hooks
+│   ├── services/            # API calls
+│   ├── context/             # global state (auth, business)
+│   ├── utils/
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+│
+├── tailwind.config.js
+├── package.json
